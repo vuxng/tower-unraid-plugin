@@ -6,17 +6,19 @@ This repository distributes installer files and release information. The Tower a
 
 ## Download
 
-- [Tower Extension v0.2.3 — preview](https://github.com/vuxng/tower-unraid-plugin/releases/tag/v0.2.3)
-- [Download tower.plg](https://github.com/vuxng/tower-unraid-plugin/releases/download/v0.2.3/tower.plg)
-- [Download the SHA-256 checksum](https://github.com/vuxng/tower-unraid-plugin/releases/download/v0.2.3/tower.plg.sha256)
+- [Tower Extension v0.2.4 — preview](https://github.com/vuxng/tower-unraid-plugin/releases/tag/v0.2.4)
+- [Download tower.plg](https://github.com/vuxng/tower-unraid-plugin/releases/download/v0.2.4/tower.plg)
+- [Download the SHA-256 checksum](https://github.com/vuxng/tower-unraid-plugin/releases/download/v0.2.4/tower.plg.sha256)
 
-Version 0.2.3 is a preview. Automated tests cover packaging, permissions and simulated resource creation. Installation, API restart, reboot persistence and removal still need validation on a real Unraid server.
+Version 0.2.4 is a preview. Automated tests cover packaging, permissions and simulated resource creation. Installation, API restart, reboot persistence and removal still need validation on a real Unraid server.
 
 This release also retains the fix for 0.2.1's rejection of compatible `reflect-metadata@0.1.14` hosts. It supports `^0.1.13 || ^0.2.0` without upgrading the host library; tests run with 0.1.14.
 
-The installer also checks CLI startup before making changes, reporting its underlying error and scheduling no restart if that check fails.
+Version 0.2.4 installs and removes only Tower's module directory and manifest/configuration entries. It no longer runs npm in Unraid's API directory. Reproduction on the official API 4.35.1 package found that the old npm installer pruned four existing packages, including `passport`, causing fresh CLI processes to fail while the already-running API remained reachable.
 
-Version 0.2.3 avoids the Unraid CLI startup failure (`sonic boom is not ready yet`) during module registration. It updates only Tower's entry in the API plugin configuration, preserving other settings and plugins.
+For affected API **4.35.1+a9625ae2** hosts with Tower 0.2.1–0.2.3 and missing `passport`, this release restores only absent `passport`, `pause`, `@types/inquirer` and `@types/through` packages. Recovery uses the official Unraid 4.35.1 TXZ, verified against SHA-256 `111c7ed887abe6e5cb31f73595929a397c5d6db1b8741a7a7518a006301ad40f`. It uses Unraid's cached installer when available; otherwise it downloads that exact release from `unraid/api` on GitHub. Existing packages are not overwritten. Other API versions require manual diagnosis.
+
+CLI startup is checked before Tower installation and again after registration. A failed check reports the underlying error and schedules no API restart.
 
 ## Install
 
@@ -25,12 +27,12 @@ In a Tower build configured for this release, open **Docker → Install App** or
 Alternatively, open **Plugins → Install Plugin** in the Unraid WebGUI and paste:
 
 ```text
-https://github.com/vuxng/tower-unraid-plugin/releases/download/v0.2.3/tower.plg
+https://github.com/vuxng/tower-unraid-plugin/releases/download/v0.2.4/tower.plg
 ```
 
 The installer contains the extension and its XML parser dependencies in one file. It verifies the embedded archive before installation. The API restart is intended to leave existing VMs and containers running.
 
-If 0.2.1 failed specifically with `Unsupported Unraid API dependency: reflect-metadata@0.1.14`, it stopped before installing the module. After reviewing the failed result, select **Prepare New Installation** and confirm the review in Tower and install 0.2.3 using a build configured for this release.
+If 0.2.1 failed specifically with `Unsupported Unraid API dependency: reflect-metadata@0.1.14`, it stopped before installing the module. After reviewing the failed result, select **Prepare New Installation** and confirm the review in Tower and install 0.2.4 using a build configured for this release.
 
 ## Requirements
 

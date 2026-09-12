@@ -6,13 +6,17 @@ This repository distributes installer files and release information. The Tower a
 
 ## Download
 
-- [Tower Extension v0.2.2 — preview](https://github.com/vuxng/tower-unraid-plugin/releases/tag/v0.2.2)
-- [Download tower.plg](https://github.com/vuxng/tower-unraid-plugin/releases/download/v0.2.2/tower.plg)
-- [Download the SHA-256 checksum](https://github.com/vuxng/tower-unraid-plugin/releases/download/v0.2.2/tower.plg.sha256)
+- [Tower Extension v0.2.3 — preview](https://github.com/vuxng/tower-unraid-plugin/releases/tag/v0.2.3)
+- [Download tower.plg](https://github.com/vuxng/tower-unraid-plugin/releases/download/v0.2.3/tower.plg)
+- [Download the SHA-256 checksum](https://github.com/vuxng/tower-unraid-plugin/releases/download/v0.2.3/tower.plg.sha256)
 
-Version 0.2.2 is a preview. Automated tests cover packaging, permissions and simulated resource creation. Installation, API restart, reboot persistence and removal still need validation on a real Unraid server.
+Version 0.2.3 is a preview. Automated tests cover packaging, permissions and simulated resource creation. Installation, API restart, reboot persistence and removal still need validation on a real Unraid server.
 
-This release fixes 0.2.1's rejection of compatible `reflect-metadata@0.1.14` hosts. It supports `^0.1.13 || ^0.2.0` without upgrading the host library; all 30 plugin tests pass with 0.1.14.
+This release also retains the fix for 0.2.1's rejection of compatible `reflect-metadata@0.1.14` hosts. It supports `^0.1.13 || ^0.2.0` without upgrading the host library; tests run with 0.1.14.
+
+The installer also checks CLI startup before making changes, reporting its underlying error and scheduling no restart if that check fails.
+
+Version 0.2.3 avoids the Unraid CLI startup failure (`sonic boom is not ready yet`) during module registration. It updates only Tower's entry in the API plugin configuration, preserving other settings and plugins.
 
 ## Install
 
@@ -21,12 +25,12 @@ In a Tower build configured for this release, open **Docker → Install App** or
 Alternatively, open **Plugins → Install Plugin** in the Unraid WebGUI and paste:
 
 ```text
-https://github.com/vuxng/tower-unraid-plugin/releases/download/v0.2.2/tower.plg
+https://github.com/vuxng/tower-unraid-plugin/releases/download/v0.2.3/tower.plg
 ```
 
 The installer contains the extension and its XML parser dependencies in one file. It verifies the embedded archive before installation. The API restart is intended to leave existing VMs and containers running.
 
-If 0.2.1 failed specifically with `Unsupported Unraid API dependency: reflect-metadata@0.1.14`, it stopped before installing the module. After reviewing the failed result, select **I've Reviewed the Installation** in Tower and install 0.2.2 using a build configured for this release.
+If 0.2.1 failed specifically with `Unsupported Unraid API dependency: reflect-metadata@0.1.14`, it stopped before installing the module. After reviewing the failed result, select **Prepare New Installation** and confirm the review in Tower and install 0.2.3 using a build configured for this release.
 
 ## Requirements
 

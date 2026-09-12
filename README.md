@@ -10,7 +10,7 @@ This repository distributes installer files and release information. The Tower a
 - [Download tower.plg](https://github.com/vuxng/tower-unraid-plugin/releases/download/v0.2.4/tower.plg)
 - [Download the SHA-256 checksum](https://github.com/vuxng/tower-unraid-plugin/releases/download/v0.2.4/tower.plg.sha256)
 
-Version 0.2.4 is a preview. Automated tests cover packaging, permissions and simulated resource creation. Installation, API restart, reboot persistence and removal still need validation on a real Unraid server.
+Version 0.2.4 is a preview. Automated tests cover packaging, permissions and simulated resource creation. A live upgrade from a failed legacy installation was verified on Unraid 7.3.2 / API 4.35.1 on 2026-09-12: Tower confirmed the loaded 0.2.4 module after API restart and loaded the Docker app catalog. Reboot persistence, live removal and resource creation remain unverified; the VM options read on that host still reported an operation failure.
 
 This release also retains the fix for 0.2.1's rejection of compatible `reflect-metadata@0.1.14` hosts. It supports `^0.1.13 || ^0.2.0` without upgrading the host library; tests run with 0.1.14.
 
